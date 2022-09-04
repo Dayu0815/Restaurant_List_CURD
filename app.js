@@ -1,5 +1,7 @@
 // require packages used in the project
 const express = require('express')
+const mongoose = require('mongoose') //載入mongoose
+
 const app = express()
 const port = 3000
 
@@ -7,6 +9,24 @@ const port = 3000
 const exphbs = require('express-handlebars')
 //下載導入 8 筆餐廳清單
 const storeList = require('./store.json')
+
+//設定連線到 mongoDB，設定環境變數，將指定資訊傳入程式碼，在連線資料庫時傳入設定，直接把兩組設定合併成一個物件，更新語法 
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+//取得資料連線狀態
+const db = mongoose.connection
+
+//連線異常
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+
+//連線成功
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
+
+
 
 // setting 樣板引擎 (template engine)
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
