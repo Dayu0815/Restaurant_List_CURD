@@ -1,4 +1,8 @@
+// 載入 mongoose
 const mongoose = require('mongoose')
+
+// 定義資料結構 Schema（資料庫綱要）
+// 用 JSON 的方式來告訴 mongo 說 document 的資料會包含哪些型態
 const Schema = mongoose.Schema
 const storeSchema = new Schema({
   name: {
@@ -39,4 +43,4 @@ const storeSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Restaurant', storeSchema)
+module.exports = mongoose.model('Store', storeSchema)
