@@ -2,10 +2,10 @@
 const mongoose = require('mongoose')
 
 // 載入 store model
-const Store = require('../store')
+const Restaurant = require('../restaurant')
 
 // 載入種子資料
-const storeSeed = require('./store.json').results
+const restaurantList = require("../../restaurant.json").results
 
 // 連線至資料庫
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -16,10 +16,14 @@ db.on('error', () =>
   console.log('Mongodb error')
 )
 db.once('open', () => {
-  console.log('Mongodb connected')
+  console.log('running restaurantSeeder script...')
 
   // 在資料庫建立種子資料
-  
-  //Store.create(storeSeed)
- // console.log('done')
+  Restaurant.create(restaurantList)
+    .then(() => {
+      console.log("restaurantSeeder done!")
+      db.close()
+    })
+    .catch(err => console.log(err))
 })
+console.log(restaurantList)

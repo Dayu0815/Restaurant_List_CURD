@@ -1,8 +1,11 @@
 // require packages used in the project
 const express = require('express')
 const mongoose = require('mongoose') //載入mongoose
-const Store = require('./models/store') //載入 store model
-const bodyParser = require('body-parser') //引用 body-parser
+
+const bodyParser = require('body-parser') //引用 middleware _body-parser
+const methodOverride = require('method-override')//引用 middleware _method-override
+
+const Restaurant = require("./models/Restaurant") //載入 Restaurant model
 const app = express()
 const port = 3000
 
@@ -18,9 +21,9 @@ app.use(express.static('public'))
 
 // setting body parser
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride("_method"))
 
-
-// 設定連線到 mongoDB，設定環境變數，將指定資訊傳入程式碼，在連線資料庫時傳入設定，直接把兩組設定合併，更新語法 
+// 設定連線 mongoDB，設定環境變數，將指定資訊傳入程式碼，在連線資料庫時傳入設定，直接把兩組設定合併，更新語法 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // 取得資料連線狀態_連線異常_連線成功 顯示訊息
@@ -34,68 +37,80 @@ db.once('open', () => {
 
 // 設定路由 get 瀏覽全部餐廳
 app.get('/', (req, res) => {
-  Store.find()                             //取出 store model 裡的所有資料
+  Restaurant.find()                       //取出 store model 裡的所有資料
     .lean()                               // 把 Mongoose 的 Model 物件，轉換成乾淨單純的 JS 資料陣列
-    .then(stores => {
-      const name = stores.forEach(store => store.name)
-      res.render('index', { stores, name })// 將 stores 資料，傳給前端 index 樣版
-    })
+    .then(restaurantsData => res.render("index", { restaurantsData }))
     .catch(error => console.error(error)) //如果發生意外，執行錯誤處理
 })
 
-// routes setting1 _create a variable to store restaurants
-//app.get('/', (req, res) => {
-// past the restaurant data into 'index' 局部模板（partial template）
-// res.render('index', { store: Store.results })
-//})
-
-// routes setting2 _search .store_id
-app.get('/stores/:store_id', (req, res) => {
-  const store = storeList.results.find(store => store.id.toString() === req.params.store_id)
-  res.render('show', { store: store })
-})
-
-// routes setting3 _search .condition
-app.get('/search', (req, res) => {
-  const condition = req.query.condition
-  const keyword = req.query.keyword
-  let conditionResult = ''
-
-  // filter 餐廳名稱.name
-  if (condition === 'name') {
-    const stores = storeList.results.filter(store => {
-      return store.name.includes(keyword)
-    })
-
-    // not found
-    if (stores.length === 0) {
-      conditionResult = '沒有您要找的資料 !!!'
-      return res.render('index', { stores: storeList.results, keyword, name: condition, conditionResult })
-    }
-
-    conditionResult = `發現:${stores.length} 筆`
-    return res.render('index', { stores: stores, keyword, name: condition, conditionResult })
+// 搜尋特定餐廳
+app.get("/search", (req, res) => {
+  if (!req.query.keywords) {
+    res.redirect("/")
   }
 
-  //filter 餐廳類別.category
-  if (condition === 'type') {
-    const stores = storeList.results.filter(store => {
-      return store.category.includes(keyword)
+  const keywords = req.query.keywords
+  const keyword = req.query.keywords.trim().toLowerCase()
+
+  Restaurant.find({})
+    .lean()
+    .then(restaurantsData => {
+      const filterRestaurantsData = restaurantsData.filter(
+        data =>
+          data.name.toLowerCase().includes(keyword) ||
+          data.category.includes(keyword)
+      )
+      res.render("index", { restaurantsData: filterRestaurantsData, keywords })
     })
-    // not found
-    if (stores.length === 0) {
-      conditionResult = '沒有您要找的資料 !!!'
-      return res.render('index', { stores: storeList.results, keyword, type: condition, conditionResult })
-    }
-    conditionResult = `發現:${stores.length} 筆`
-    return res.render('index', { stores: stores, keyword: keyword, type: condition, conditionResult })
-  }
-  conditionResult = '請選擇條件!!!'
-  res.render('index', { stores: storeList.results, keyword, conditionResult })
+    .catch(err => console.log(err))
 })
 
-// render
-//res.render('index', { stores: stores })})
+// 新增餐廳頁面
+app.get("/restaurants/new", (req, res) => {
+  res.render("new")
+})
+
+// 瀏覽特定餐廳
+app.get("/restaurants/:restaurantId", (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findById(restaurantId)
+    .lean()
+    .then(restaurantData => res.render("show", { restaurantData }))
+    .catch(err => console.log(err))
+})
+
+// 新增餐廳
+app.post("/restaurants", (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
+    .catch(err => console.log(err))
+})
+
+// 編輯餐廳頁面
+app.get("/restaurants/:restaurantId/edit", (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findById(restaurantId)
+    .lean()
+    .then(restaurantData => res.render("edit", { restaurantData }))
+    .catch(err => console.log(err))
+})
+
+// 更新餐廳
+app.put("/restaurants/:restaurantId", (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findByIdAndUpdate(restaurantId, req.body)
+    //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
+    .then(() => res.redirect(`/restaurants/${restaurantId}`))
+    .catch(err => console.log(err))
+})
+
+// 刪除餐廳
+app.delete("/restaurants/:restaurantId", (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findByIdAndDelete(restaurantId)
+    .then(() => res.redirect("/"))
+    .catch(err => console.log(err))
+})
 
 // start and listen on The Express server
 app.listen(port, () => {
