@@ -19,11 +19,6 @@ db.once('open', () => {
   console.log('Mongodb connected')
 
   // 在資料庫建立種子資料
-  Store.insertMany(storeSeed, (err, stores) => {
-    if (err) {
-      return console.error(err);
-    }
-  })
   
   //Store.create(storeSeed)
  // console.log('done')
