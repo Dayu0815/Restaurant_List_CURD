@@ -8,14 +8,9 @@
         <h4 class="mb-2 fw-bold">尋找餐廳：</h4>
         <div class="input-group">
 
-          <!-- 進階搜尋功能 -->
-          <select class="rounded mb-1 mr-sm-2 fw-bold fs-5 border-2" name="condition" id="search-condition">
-            <option selected>搜尋條件</option>
-            <option value="name" {{#if name}}selected{{/if}}>餐廳名稱</option>
-            <option value="type" {{#if type}}selected{{/if}}>餐廳類別</option>
-          </select>
 
-          <input type="text" name="keyword" class="form-control mb-1 mr-sm-2 fw-bold fs-5 border-3"
+
+          <input type="text" name="keywords" class="form-control mb-1 mr-sm-2 fw-bold fs-5 border-3"
             placeholder="輸入餐廳、分類" aria-label="Restaurant Name or rating" value="{{keyword}}"
             aria-describedby=" search-button">
 
@@ -26,7 +21,7 @@
         </div>
       </form>
       <div class="text-right">
-        <a href="/restaurant/new"><button class="btn btn-primary">新增餐廳</button></a>
+        <a href="/restaurants/new"><button class="btn btn-primary">新增餐廳</button></a>
       </div>
     </div>
   </div>
@@ -42,7 +37,7 @@
         <div class="col-md-4 p-2">
 
           <!-- restaurants 資料庫的編號屬性為 .id -->
-          <a href="/restaurant/{{this.id}}">
+          <a href="/restaurants/{{this.id}}" class="text-secondary">
             <div class="card mb-3">
               <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
           </a>

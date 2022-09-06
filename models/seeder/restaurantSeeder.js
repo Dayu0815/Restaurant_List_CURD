@@ -22,7 +22,7 @@ db.once('open', () => {
   Restaurant.create(restaurantList)
     .then(() => {
       console.log("restaurantSeeder done!")
-      
+      db.close()
     })
     .catch(err => console.log(err))
 })

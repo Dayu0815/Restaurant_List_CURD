@@ -38,12 +38,12 @@ db.once('open', () => {
 // 設定路由 get 瀏覽全部餐廳
 app.get('/', (req, res) => {
   Restaurant.find()                       //取出 store model 裡的所有資料
-    .lean()                               // 把 Mongoose 的 Model 物件，轉換成乾淨單純的 JS 資料陣列
+    .lean()          // 把 Mongoose 的 Model 物件，轉換成乾淨單純的 JS 資料陣列
     .then(restaurantsData => res.render("index", { restaurantsData }))
     .catch(error => console.error(error)) //如果發生意外，執行錯誤處理
 })
 
-// 搜尋特定餐廳
+// 設定路由 get 搜尋特定餐廳
 app.get("/search", (req, res) => {
   if (!req.query.keywords) {
     res.redirect("/")
@@ -65,28 +65,28 @@ app.get("/search", (req, res) => {
     .catch(err => console.log(err))
 })
 
-// 新增餐廳頁面
+// 設定路由 get 新增餐廳頁面
 app.get("/restaurants/new", (req, res) => {
   res.render("new")
 })
 
-// 瀏覽特定餐廳
-app.get("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+// 設定路由 get 瀏覽特定餐廳
+app.get("/restaurants/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
     .lean()
-    .then(restaurantData => res.render("show", { restaurantData }))
+    .then(restaurantsData => res.render("show", { restaurantsData }))
     .catch(err => console.log(err))
 })
 
-// 新增餐廳
+// 設定路由 post 新增餐廳
 app.post("/restaurants", (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
 
-// 編輯餐廳頁面
+// 設定路由 get 編輯餐廳頁面
 app.get("/restaurants/:restaurantId/edit", (req, res) => {
   const { restaurantId } = req.params
   Restaurant.findById(restaurantId)
