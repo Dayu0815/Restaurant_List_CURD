@@ -1,6 +1,8 @@
 # 餐廳清單 <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/425269463/iPhone/sticker_animation@2x.png" alt="Minions" title="Minions Restaurant" width='30' height='30'/>
 
-**本次專案收集了我們最喜歡的 8 家餐廳，目前有提供餐廳查詢服務，以利找出在地的美食。**
+**1.本次專案收集了我們最喜歡的 8 家餐廳，目前有提供餐廳查詢服務，以利找出在地的美食。**
+
+**2.本次專案增加「新增」、「刪除」及「修改」餐廳資料等 3 項功能，提供更多瀏覽餐廳資訊的選擇服務。**
 
 ## 功能列表
 
