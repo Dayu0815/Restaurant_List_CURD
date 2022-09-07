@@ -70,13 +70,13 @@ app.get("/restaurants/new", (req, res) => {
   res.render("new")
 })
 
-// 設定路由 get 瀏覽特定餐廳
-app.get("/restaurants/:id", (req, res) => {
+// 設定路由 get 瀏覽特定一間餐廳
+app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   Restaurant.findById(id)
     .lean()
-    .then(restaurantsData => res.render("show", { restaurantsData }))
-    .catch(err => console.log(err))
+    .then(restaurantsData => res.render('show', { restaurantsData }))
+    .catch(error => console.log(error))
 })
 
 // 設定路由 post 新增餐廳

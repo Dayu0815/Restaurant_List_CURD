@@ -16,13 +16,13 @@ db.on('error', () =>
   console.log('Mongodb error')
 )
 db.once('open', () => {
-  console.log('running restaurantSeeder script...')
+  console.log('Mongodb connected running script...')
 
   // 在資料庫建立種子資料
   Restaurant.create(restaurantList)
     .then(() => {
       console.log("restaurantSeeder done!")
-      db.close()
+      
     })
     .catch(err => console.log(err))
 })

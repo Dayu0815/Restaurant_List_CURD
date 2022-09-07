@@ -36,8 +36,8 @@
         {{#each restaurantsData}}
         <div class="col-md-4 p-2">
 
-          <!-- restaurants 資料庫的編號屬性為 .id -->
-          <a href="/restaurants/{{this.id}}" class="text-secondary">
+          <!-- 資料庫的編號屬性為 findById() 找的是 _id  -->
+          <a href="/restaurants/{{this._id}}" class="text-secondary">
             <div class="card mb-3">
               <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
           </a>
@@ -46,13 +46,21 @@
 
             <div class="restaurant-category mb-1">
               <i class="fas fa-utensils pr-2 p-1"></i> {{this.category}}
-
-
-              <!-- 課程教材內容與 bootstrap 語法不符，目前@5.2.0版已修訂 Pill badges  -->
-              <span class="badge rounded-pill bg-danger font-weight-normal">
-                {{this.rating}} <i class="fas fa-star fa-xs"></i>
-              </span>
             </div>
+
+            <!-- 課程教材內容與 bootstrap 語法不符，目前@5.2.0版已修訂 Pill badges  -->
+            <span class="badge rounded-pill bg-danger font-weight-normal">
+              {{this.rating}} <i class="fas fa-star fa-xs"></i>
+            </span>
+          </div>
+
+
+          <div class="card-footer d-flex justify-content-end flex-wrap">
+            <a href="/restaurants/{{this._id}}/edit"><button class="btn btn-link btn-sm">Edit</button></a>
+            <a href="/restaurants/{{this._id}}"><button class="btn btn-link btn-sm">Details</button></a>
+            <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger btn-sm text-white">delete</button>
+            </form>
           </div>
         </div>
       </div>
