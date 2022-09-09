@@ -18,8 +18,8 @@ app.set('view engine', 'hbs')
 // setting Bootstrap 三組靜態檔案（static files）
 app.use(express.static('public'))
 
-// setting body parser
-app.use(bodyParser.urlencoded({ extended: true }))
+// setting 套用內建 body parser
+app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 
 // 設定連線 mongoDB，設定環境變數，將指定資訊傳入程式碼，在連線資料庫時傳入設定，直接把兩組設定合併，更新語法 
@@ -94,7 +94,7 @@ app.get("/restaurants/:restaurantId/edit", (req, res) => {
     .catch(err => console.log(err))
 })
 
-// 更新餐廳
+// 設定路由 put 更新餐廳
 app.put("/restaurants/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
   Restaurant.findByIdAndUpdate(restaurantId, req.body)
@@ -103,7 +103,7 @@ app.put("/restaurants/:restaurantId", (req, res) => {
     .catch(err => console.log(err))
 })
 
-// 刪除餐廳
+// 設定路由 delete 刪除餐廳
 app.delete("/restaurants/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
   Restaurant.findByIdAndDelete(restaurantId)
