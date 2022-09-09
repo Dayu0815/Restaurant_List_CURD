@@ -2,7 +2,6 @@
 const express = require('express')
 const mongoose = require('mongoose') //載入mongoose
 
-const bodyParser = require('body-parser') //引用 middleware _body-parser
 const methodOverride = require('method-override')//引用 middleware _method-override
 
 const Restaurant = require("./models/Restaurant") //載入 Restaurant model
