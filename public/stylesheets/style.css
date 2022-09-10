@@ -62,7 +62,13 @@ header {
   border-bottom-left-radius: 50px;
 }
 
+#sort {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
 
+}
 
 .btn-outline-dark {
   border-top-right-radius: 50px;
