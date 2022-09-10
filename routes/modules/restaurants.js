@@ -1,49 +1,49 @@
 const express = require("express")
 const router = express.Router()
-const Restaurant = require("../../models/Restaurant")
+const Restaurant = require("../../models/Restaurant") //引用 Restaurant model
 
-// 設定路由 get 新增餐廳頁面
-router.get("/restaurants/new", (req, res) => {
+// 設定路由 get 新增餐廳頁面，記得刪除路由的前綴詞 /restaurants
+router.get("/new", (req, res) => {
   res.render("new")
 })
 
-// 設定路由 get 瀏覽特定一間餐廳
-router.get("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+// 設定路由 get 瀏覽特定一間餐廳，記得刪除路由的前綴詞 /restaurants
+router.get("/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
     .lean()
-    .then(restaurantData => res.render("show", { restaurantData }))
+    .then(restaurantsData => res.render("show", { restaurantsData }))
     .catch(err => console.log(err))
 })
 
-// 設定路由 post 新增餐廳
-router.post("/restaurants", (req, res) => {
+// 設定路由 post 新增餐廳，記得刪除路由的前綴詞 /restaurants
+router.post("/", (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
 
-// 設定路由 get 編輯餐廳頁面
-router.get("/restaurants/:restaurantId/edit", (req, res) => {
+// 設定路由 get 編輯餐廳頁面，記得刪除路由的前綴詞 /restaurants
+router.get("/:restaurantId/edit", (req, res) => {
   const { restaurantId } = req.params
   Restaurant.findById(restaurantId)
     .lean()
-    .then(restaurantData => res.render("edit", { restaurantData }))
+    .then(restaurantsData => res.render("edit", { restaurantsData }))
     .catch(err => console.log(err))
 })
 
 //methodOverride(路由覆蓋機制) 設定路由post，改成put 讀取查詢資料庫，接住修改後資料，送往資料庫儲存_ Update
-router.put("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findByIdAndUpdate(restaurantId, req.body)
-    .then(() => res.redirect(`/restaurants/${restaurantId}`))
+router.put("/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${id}`))
     .catch(err => console.log(err))
 })
 
 //methodOverride(路由覆蓋機制) 設定路由post，改成delete 讀取查詢資料庫，刪除特定資料_ Delete
-router.delete("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findByIdAndDelete(restaurantId)
+router.delete("/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndDelete(id)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
