@@ -49,6 +49,13 @@
 於網址列，輸入：localhost:3000
 ```
 
+## 重構專案項目
+**1.路由語義化：RESTful API _透過 HTTP 動詞與資源名稱表達 CRUD 功能**
+
+**2.重構路由器：Express.Router _運用 Express.Router，將主程式 app.js 裡的路由清單分離成獨立路由器**
+
+**3.重構 Mongoose 連線設定 _將連線設定抽取成共用的設定檔**
+
 ## 開發工具 <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/179854889/iPhone/sticker_animation@2x.png" alt="Minions" title="Minions" width='30px' height='30px'/>
 - Node.js 16.16.0
 - express 4.17.1
