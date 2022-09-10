@@ -49,6 +49,13 @@
 於網址列，輸入：localhost:3000
 ```
 
+## 開發工具 <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/179854889/iPhone/sticker_animation@2x.png" alt="Minions" title="Minions" width='30px' height='30px'/>
+- Node.js 16.16.0
+- express 4.17.1
+- express-handlebars 3.0.0
+- method-override 3.0.0
+- MongoDB
+- mongoose 6.0.5
 
 ## 開發者 <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/425269466/iPhone/sticker_animation@2x.png" alt="Minions" title="Minions" width='30px' height='30px'/>
 **Minions** 
