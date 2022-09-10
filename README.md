@@ -53,7 +53,7 @@
 於網址列，輸入：localhost:3000
 ```
 
-## 重構專案項目
+## 重構專案項目 <img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/56629446/iPhone/sticker_animation@2x.png" alt="Minions" title="Minions" width='30px' height='30px'/>
 **1.路由語義化RESTful API： 透過 HTTP 動詞與資源名稱表達 CRUD 功能**
 
 **2.重構路由器Express.Router： 運用 Express.Router，將主程式 app.js 裡的路由清單分離成獨立路由器**
