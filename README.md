@@ -30,15 +30,15 @@
 ## 安裝步驟 <img src="https://octodex.github.com/images/minion.png" alt="Minions" title="Minions" width='30px' height='30px'/>
 * step 1.
 ```
-點選 Code / Clone / HTTPS 專案至本機電腦，或是打開 terminal 進行專案儲存，輸入：git clone https://github.com/Dayu0815/Restaurant_list.git
+點選 Code / Clone / HTTPS 專案至本機電腦，或是打開 terminal 進行專案儲存，輸入：git clone https://github.com/Dayu0815/Restaurant_List_CURD.git
 ```
 * step 2. 
 ```
-進入專案資料夾，在終端機輸入：cd Restaurant_list
+進入專案資料夾，在終端機輸入：cd Restaurant_List_CURD
 ```
 * step 3.
 ```
-安裝 npm 套件，依序安裝啟動器 npm init -y ，安裝 Express npm i express@4.16.4
+安裝 npm 套件，依序安裝啟動器 npm init -y ，安裝 Express npm i express@4.17.1
 ```
 * step 4. 
 ```
