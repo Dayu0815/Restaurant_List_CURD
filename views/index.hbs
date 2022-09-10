@@ -4,25 +4,30 @@
 <div class="container search-bar mt-4 mx-auto">
   <div class="search-bar-outer ">
     <div class="search-bar-inner">
+      <h4 class="mb-2 fw-bold">尋找餐廳：</h4>
       <form action="/search">
-        <h4 class="mb-2 fw-bold">尋找餐廳：</h4>
-        <div class="input-group">
+        <div class="d-flex flex-column flex-sm-row align-items-center">
+          <div class="input-group p-2">
 
+            <input type="text" name="keywords" class="form-control fw-bold fs-4 border-3" placeholder="輸入餐廳、分類"
+              aria-label="Restaurant Name or rating" value="{{keyword}}" aria-describedby=" search-button">
 
+            <div class="input-group-append">
+              <button class="form-search btn btn-outline-dark fw-bold border-3 fs-6" type="submit" id="search-button">
+                <i class="fas fa-search fa-2x"></i></button>
+            </div>
+          </div>
 
-          <input type="text" name="keywords" class="form-control mb-1 mr-sm-2 fw-bold fs-5 border-3"
-            placeholder="輸入餐廳、分類" aria-label="Restaurant Name or rating" value="{{keyword}}"
-            aria-describedby=" search-button">
-
-          <div class="input-group-append">
-            <button class="form-search btn btn-major mb-1 fw-bold fs-6" type="submit" id="search-button">
-              <i class="fas fa-search fa-2x"></i></button>
+          <div class="input-group">
+            <select class="form-control fw-bold fs-4 border-3" id="sort" name="sort">
+              <option>A > Z</option>
+              <option>Z > A</option>
+              <option>類別</option>
+              <option>地區</option>
+            </select>
           </div>
         </div>
       </form>
-      <div class="text-right">
-        <a href="/restaurants/new"><button class="btn btn-primary">新增餐廳</button></a>
-      </div>
     </div>
   </div>
 </div>
@@ -54,10 +59,10 @@
             </span>
           </div>
 
-
           <div class="card-footer d-flex justify-content-end flex-wrap">
             <a href="/restaurants/{{this._id}}/edit"><button class="btn btn-link btn-sm">Edit</button></a>
             <a href="/restaurants/{{this._id}}"><button class="btn btn-link btn-sm">Details</button></a>
+            <!-- 套用 method-override 設計的路由覆蓋機制，修改 <form> 發送請求的路徑-->
             <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn btn-danger btn-sm text-white">delete</button>
             </form>

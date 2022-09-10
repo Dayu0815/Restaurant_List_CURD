@@ -34,8 +34,8 @@ header {
 
 .search-bar .search-bar-outer {
   margin: 0 auto;
-  max-width: 680px;
-  background-color: #ffe69b;
+  max-width: 950px;
+  background-color: #ffc107;
   border-radius: 15px;
   padding: 20px 50px 40px;
   border: 0;
@@ -44,7 +44,7 @@ header {
 }
 
 .search-bar .search-bar-inner h4 {
-  color: #9b4b4b;
+  color: #000;
 }
 
 #search-condition {
@@ -62,9 +62,7 @@ header {
   border-bottom-left-radius: 50px;
 }
 
-.btn-major {
-  background-color: #9b4b4b;
-  color: white;
+.btn-outline-dark {
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
 }

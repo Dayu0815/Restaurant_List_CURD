@@ -1,8 +1,8 @@
 // require packages used in the project
 const express = require('express')
-const mongoose = require('mongoose') //載入mongoose
-
-const methodOverride = require('method-override')//引用 middleware _method-override
+const mongoose = require('mongoose') //載入 mongoose
+const bodyParser = require('body-parser') //請改用內建 body-parser，不需另外安裝載入
+const methodOverride = require('method-override')//載入 middleware _method-override(路由覆蓋機制)
 
 const Restaurant = require("./models/Restaurant") //載入 Restaurant model
 const app = express()
@@ -18,9 +18,11 @@ app.set('view engine', 'hbs')
 // setting Bootstrap 三組靜態檔案（static files）
 app.use(express.static('public'))
 
-// setting 套用內建 body parser
+//設定每一筆請求，都要透過 body-parser 前置處理，都要透過 methodOverride(路由覆蓋機制) 前置處理
+//將 request 導入 Router路由器
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
+
 
 // 設定連線 mongoDB，設定環境變數，將指定資訊傳入程式碼，在連線資料庫時傳入設定，直接把兩組設定合併，更新語法 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -94,19 +96,18 @@ app.get("/restaurants/:restaurantId/edit", (req, res) => {
     .catch(err => console.log(err))
 })
 
-// 設定路由 put 更新餐廳
-app.put("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findByIdAndUpdate(restaurantId, req.body)
-    //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
-    .then(() => res.redirect(`/restaurants/${restaurantId}`))
+//methodOverride(路由覆蓋機制) 設定路由post，改成put 讀取查詢資料庫，接住修改後資料，送往資料庫儲存_ Update
+app.put("/restaurants/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${id}`)) //完成編輯後，導向瀏覽特定餐廳頁面
     .catch(err => console.log(err))
 })
 
-// 設定路由 delete 刪除餐廳
-app.delete("/restaurants/:restaurantId", (req, res) => {
-  const { restaurantId } = req.params
-  Restaurant.findByIdAndDelete(restaurantId)
+//methodOverride(路由覆蓋機制) 設定路由post，改成delete 讀取查詢資料庫，刪除特定資料_ Delete
+app.delete("/restaurants/:id", (req, res) => {
+  const id = req.params.id
+  Restaurant.findByIdAndDelete(id)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
