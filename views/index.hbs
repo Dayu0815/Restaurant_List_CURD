@@ -1,34 +1,35 @@
 <!-- ./views/index.handlebars -->
-
 <!-- search bar -->
 <div class="container search-bar mt-4 mx-auto">
   <div class="search-bar-outer ">
     <div class="search-bar-inner">
-      <h4 class="mb-2 fw-bold">尋找餐廳：</h4>
-      <form action="/search">
-        <div class="d-flex flex-column flex-sm-row align-items-center">
-          <div class="input-group p-2">
-
+      <form action="/restaurants/search">
+        <h4 class="mb-2 fw-bold">尋找餐廳：</h4>
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+          <div class="input-group p-1">
             <input type="text" name="keywords" class="form-control fw-bold fs-4 border-3" placeholder="輸入餐廳、分類"
-              aria-label="Restaurant Name or rating" value="{{keyword}}" aria-describedby=" search-button">
-
+              aria-label="Restaurant Name or rating" value="{{keywords}}" aria-describedby=" search-button">
             <div class="input-group-append">
               <button class="form-search btn btn-outline-dark fw-bold border-3 fs-6" type="submit" id="search-button">
                 <i class="fas fa-search fa-2x"></i></button>
             </div>
           </div>
-
-          <div class="input-group">
-            <select class="form-control fw-bold fs-4 border-3" id="sort" name="sort">
-              <option>A > Z</option>
-              <option>Z > A</option>
-              <option>類別</option>
-              <option>地區</option>
-            </select>
-          </div>
         </div>
       </form>
     </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-end mb-3">
+    <i class="fa-solid fa-arrow-up-arrow-down text-secondary"></i>
+    <form>
+      <select class="form-select fw-bold fs-4 border-3" id="sort" name="sort">
+        <option selected>選擇排序</option>
+        <option>A -> Z</option>
+        <option>Z -> A</option>
+        <option>類別</option>
+        <option>地區</option>
+      </select>
+    </form>
   </div>
 </div>
 
